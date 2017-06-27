@@ -173,6 +173,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Autenticacion\Basic\ApiKeyBasicUsuarios.cs" />
+    <Compile Include="Helpers\Autenticacion\Basic\AuthBasicModule.cs" />
+    <Compile Include="Helpers\Autenticacion\Basic\Credentials.cs" />
     <Compile Include="Helpers\MvcHtml\CustomHtmlHelper.cs" />
     <Compile Include="Helpers\Swagger\ImplicitApiVersionParameter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

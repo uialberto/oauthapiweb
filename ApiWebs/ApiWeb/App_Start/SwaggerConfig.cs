@@ -1,6 +1,4 @@
 using System.Web.Http;
-using WebActivatorEx;
-using ApiWeb;
 using Swashbuckle.Application;
 using System.Web.Http.Description;
 using ApiWeb.Helpers.Swagger;
