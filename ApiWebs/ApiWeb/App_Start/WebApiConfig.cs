@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Http.Routing;
+using Microsoft.Web.Http;
+using Microsoft.Web.Http.Routing;
 
 namespace ApiWeb
 {
@@ -11,8 +14,26 @@ namespace ApiWeb
         {
             // Configuración y servicios de API web
 
-            // Rutas de API web
-            config.MapHttpAttributeRoutes();
+            #region Api Version
+
+            var constraintResolver = new DefaultInlineConstraintResolver()
+            {
+                ConstraintMap =
+                {
+                    ["apiVersion"] = typeof(ApiVersionRouteConstraint)
+                }
+            };
+
+            config.AddApiVersioning(o =>
+            {
+                o.ReportApiVersions = true;
+                o.AssumeDefaultVersionWhenUnspecified = true;
+                o.DefaultApiVersion = new ApiVersion(1, 0);
+            });
+
+            config.MapHttpAttributeRoutes(constraintResolver);
+
+            #endregion
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",

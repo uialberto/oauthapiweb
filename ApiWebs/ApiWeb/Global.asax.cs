@@ -9,7 +9,6 @@ using System.Web.SessionState;
 using System.Web.Http;
 using System.Web.Optimization;
 using Newtonsoft.Json.Serialization;
-
 namespace ApiWeb
 {
     public class Global : HttpApplication
@@ -29,7 +28,7 @@ namespace ApiWeb
             #endregion
 
             GlobalConfiguration.Configure(WebApiConfig.Register);
-            //GlobalConfiguration.Configure(SwaggerConfig.Register);
+            GlobalConfiguration.Configure(SwaggerConfig.Register);
 
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

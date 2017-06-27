@@ -1,0 +1,28 @@
+﻿.swagger-section #header {
+    background-color: #0083C5;
+    padding: 14px;
+}
+
+.swagger-section #logo {
+  background: none !important;
+}
+
+.swagger-section #explore {
+   background-color: #035498 !important;
+}
+
+.swagger-section #api_info a {
+   color: #035498 !important; 
+}
+
+.swagger-section #input_username  {
+    width: 80px;
+}
+
+.swagger-section #input_password  {
+    width: 80px;
+}
+
+.swagger-section #input_baseUrl  {
+    width: 470px !important; 
+}
