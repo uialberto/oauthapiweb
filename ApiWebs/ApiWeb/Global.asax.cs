@@ -11,9 +11,15 @@ namespace ApiWeb
     {
         void Application_Start(object sender, EventArgs e)
         {
+            //#region Personalizado
+
+            //Bootstrapper.Initialise();
+
+            //#endregion
+
             var config = GlobalConfiguration.Configuration;
 
-            // La informacion siempre se retona en Json. Ejemplo. IE.
+            // La informacion siempre se retonar en Json. Ejemplo. IE.
             config.Formatters.Remove(GlobalConfiguration.Configuration.Formatters.XmlFormatter);
 
             #region Retornar Json en formato Camel Case

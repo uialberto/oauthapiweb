@@ -1,15 +1,22 @@
-﻿using Microsoft.Owin;
+﻿using ApiWeb.Helpers.Autenticacion;
+using Microsoft.Owin;
 using Owin;
 
 [assembly: OwinStartup(typeof(ApiWeb.Startup))]
-
 namespace ApiWeb
 {
-    public class Startup
+    public partial class Startup
     {
+        private readonly IServiceSeguridad _seg;
+        public Startup()
+        {
+            //var pSeguridad = IoC.Container.Resolver<IServiceSeguridad>();
+            //_seg = pSeguridad ?? throw new ArgumentNullException(nameof(pSeguridad));
+        }
         public void Configuration(IAppBuilder app)
         {
-            // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=316888
+            //app.CreatePerOwinContext(() => new AppUnitOfWork());
+            ConfigureOAuth(app, _seg);
         }
     }
 }

@@ -1,9 +1,11 @@
 using System.Web.Http;
+using WebActivatorEx;
+using ApiWeb;
 using Swashbuckle.Application;
-using System.Web.Http.Description;
 using ApiWeb.Helpers.Swagger;
-using System.Reflection;
 using System.IO;
+using System.Reflection;
+using System.Web.Http.Description;
 
 namespace ApiWeb
 {
@@ -13,8 +15,8 @@ namespace ApiWeb
         {
             var thisAssembly = typeof(SwaggerConfig).Assembly;
             var apiExplorer = config.AddVersionedApiExplorer();
-
-            config.EnableSwagger("{apiVersion}/docs", c =>
+            config
+                .EnableSwagger("{apiVersion}/docs", c =>
                 {
                     // By default, the service root url is inferred from the request used to access the docs.
                     // However, there may be situations (e.g. proxy and load-balanced environments) where this does not
@@ -47,20 +49,20 @@ namespace ApiWeb
                             {
                                 var apiVersion = group.ApiVersion;
 
-                                var description = "API Web " + apiVersion + " componente de servicio Web. ";
+                                var description = "API Web " + apiVersion + " componente de servicio web Farmacorp. ";
                                 if (group.IsDeprecated)
                                 {
                                     description += " <strong>API Obsoleta</strong>";
                                 }
 
                                 info.Version(group.Name, $"API Web {group.ApiVersion}")
-                                    .Contact(cc => cc
-                                        .Name("Luis Alberto Baigorria R.")
-                                        .Email("info@uibasoft.com"))
-                                    .Description(description)
-                                    .License(lc => lc
-                                        .Name("Uibasoft - Derechos Reservados. Copyright ©")
-                                        .Url("http://hulkdocs.uibasoft.com/"))
+                               .Contact(cc => cc
+                                   .Name("Luis Alberto Baigorria R.")
+                                   .Email("lbaigorria@farmacorp.com"))
+                               .Description(description)
+                               .License(lc => lc
+                                   .Name("Farmacorp - Derechos Reservados. Copyright ©")
+                                         .Url("http://apidocs.farmacorp.com/"))
                                     .TermsOfService("Shareware");
                             }
                         });
@@ -72,13 +74,14 @@ namespace ApiWeb
                     // you'll need to implement a custom IDocumentFilter and/or IOperationFilter to set these properties
                     // according to your specific authorization implementation
                     //
-                    c.BasicAuth("basic").Description("Basic HTTP Authentication");
+
+                    //c.BasicAuth("basic").Description("Basic HTTP Authentication");
+
                     //
                     // NOTE: You must also configure 'EnableApiKeySupport' below in the SwaggerUI section
-                    //c.ApiKey("apiKey")
-                    //    .Description("API Key Authentication")
-                    //    .Name("apiKey")
-                    //    .In("header");
+
+                    //c.ApiKey("apiKey").Description("API Key Authentication").Name("apiKey").In("header");
+
                     //
                     //c.OAuth2("oauth2")
                     //    .Description("OAuth2 Implicit Grant")
@@ -196,15 +199,15 @@ namespace ApiWeb
                     // The file must be included in your project as an "Embedded Resource", and then the resource's
                     // "Logical Name" is passed to the method as shown below.
                     //
-                    //c.InjectStylesheet(thisAssembly, "ApiWeb.Content.swagger.swaggercustom.css");
+                    c.InjectStylesheet(thisAssembly, "ApiWeb.Content.swagger.swaggercustom.css");
 
                     // Use the "InjectJavaScript" option to invoke one or more custom JavaScripts after the swagger-ui
                     // has loaded. The file must be included in your project as an "Embedded Resource", and then the resource's
                     // "Logical Name" is passed to the method as shown above.
                     //
 
-                    //c.InjectJavaScript(thisAssembly, "ApiWeb.Scripts.swagger.swaggercustom.js");
-                    //c.InjectJavaScript(thisAssembly, "ApiWeb.Scripts.swagger.basic-auth.js");
+                    c.InjectJavaScript(thisAssembly, "ApiWeb.Scripts.swagger.swaggercustom.js");
+                    c.InjectJavaScript(thisAssembly, "ApiWeb.Scripts.swagger.bearer-auth.js");
 
                     // The swagger-ui renders boolean data types as a dropdown. By default, it provides "true" and "false"
                     // strings as the possible choices. You can use this option to change these to something else,
@@ -262,14 +265,13 @@ namespace ApiWeb
                 });
         }
 
-        private static string GetXmlCommentsPath
+        static string GetXmlCommentsPath
         {
             get
             {
                 var basePath = System.AppDomain.CurrentDomain.RelativeSearchPath;
                 var fileName = typeof(Startup).GetTypeInfo().Assembly.GetName().Name + ".xml";
-                var path = Path.Combine(basePath, fileName);
-                return path;
+                return Path.Combine(basePath, fileName);
             }
         }
 
