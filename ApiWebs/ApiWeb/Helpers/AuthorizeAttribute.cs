@@ -17,8 +17,8 @@ namespace ApiWeb.Helpers
             {
                 var error = new
                 {
-                    error = KeysConfiguration.ErrorAuthentication,
-                    error_description = AppResources.ErrorAutenticacion
+                    type = KeysConfiguration.ErrorAuthentication,
+                    message = AppResources.ErrorAutenticacion
                 };
                 actionContext.Response = new HttpResponseMessage(System.Net.HttpStatusCode.Unauthorized)
                 {
@@ -31,8 +31,8 @@ namespace ApiWeb.Helpers
             {
                 var error = new
                 {
-                    error = KeysConfiguration.ErrorAuthorization,
-                    error_description = AppResources.ErrorAuthorizationRequerido
+                    type = KeysConfiguration.ErrorBusinessExternalExcep,
+                    message = AppResources.ErrorExcepcionAplicacion
                 };
                 actionContext.Response = new HttpResponseMessage(System.Net.HttpStatusCode.Forbidden)
                 {

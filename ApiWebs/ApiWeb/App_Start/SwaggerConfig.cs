@@ -57,11 +57,11 @@ namespace ApiWeb
 
                                 info.Version(group.Name, $"API Web {group.ApiVersion}")
                                .Contact(cc => cc
-                                   .Name("Luis Alberto Baigorria R.")
-                                   .Email("lbaigorria@farmacorp.com"))
+                                   .Name("L. Alberto Baigorria R.")
+                                   .Email("lbaigorria@outlook.com"))
                                .Description(description)
                                .License(lc => lc
-                                   .Name("Farmacorp - Derechos Reservados. Copyright ©")
+                                   .Name("Derechos Reservados. Copyright ©")
                                          .Url("http://apidocs.farmacorp.com/"))
                                     .TermsOfService("Shareware");
                             }

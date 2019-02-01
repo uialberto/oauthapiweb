@@ -17,6 +17,21 @@ namespace ApiWeb.Helpers
         public const string ErrorBusinessValidation = "BUSINESS_VALIDATION";
         public const string ErrorBusinessExternalExcep = "BUSINESS_EXTERNAL_EXCEPTION";
 
+        public static int KeyAccessTokenExpireMin
+        {
+            get
+            {
+                int value = 15;
+                var llave = ConfigurationManager.AppSettings["KeyAccessTokenExpireMin"];
+                if (string.IsNullOrEmpty(llave))
+                    return value;
+
+                int.TryParse(llave, out value);
+                return value;
+            }
+        }
+
+
         public static string KeyTokenUrl
         {
             get
@@ -36,20 +51,6 @@ namespace ApiWeb.Helpers
                 if (string.IsNullOrEmpty(llave))
                     throw new ConfigurationErrorsException("Llave de Web.config: Base.Url");
                 return llave;
-            }
-        }
-
-        public static int KeyAccessTokenExpireMin
-        {
-            get
-            {
-                int value = 15;
-                var llave = ConfigurationManager.AppSettings["KeyAccessTokenExpireMin"];
-                if (string.IsNullOrEmpty(llave))
-                    return value;
-
-                int.TryParse(llave, out value);
-                return value;
             }
         }
 

@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using ApiWeb.Helpers;
 
 namespace ApiWeb
 {
@@ -38,14 +39,14 @@ namespace ApiWeb
 
         private OAuthAuthorizationServerOptions GetOptionsApi(IServiceSeguridad service)
         {
-            //var value = KeysConfiguration.KeyTokenApiExpireMin;
+            var value = KeysConfiguration.KeyAccessTokenExpireMin;
             var result = new OAuthAuthorizationServerOptions()
             {
                 //AllowInsecureHttp = KeysConfiguration.KeyApiUseHttp,
-                //TokenEndpointPath = new PathString(KeysConfiguration.KeyTokenApiUrl),
-                AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(10),
+                TokenEndpointPath = new PathString(KeysConfiguration.KeyTokenUrl),
+                AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(value),
                 Provider = new AuthorizationServerProvider(service),
-                //RefreshTokenProvider = new RefreshTokenProvider()
+                RefreshTokenProvider = new RefreshTokenProvider()
             };
             return result;
         }

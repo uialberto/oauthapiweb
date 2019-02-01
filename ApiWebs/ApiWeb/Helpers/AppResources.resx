@@ -132,6 +132,9 @@
   <data name="ErrorServiceSecureHttps" xml:space="preserve">
     <value>El recurso especificado requiere especificar el protocolo de seguridad secure sockets layer.</value>
   </data>
+  <data name="ParametrosRequerido" xml:space="preserve">
+    <value>Se requeriere que se complete los parametros requeridos.</value>
+  </data>
   <data name="TodosParametrosRequerido" xml:space="preserve">
     <value>Debe completar los parámetros requeridos.</value>
   </data>

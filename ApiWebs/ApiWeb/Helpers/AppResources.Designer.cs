@@ -106,6 +106,15 @@ namespace ApiWeb.Helpers {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Se requeriere que se complete los parametros requeridos..
+        /// </summary>
+        internal static string ParametrosRequerido {
+            get {
+                return ResourceManager.GetString("ParametrosRequerido", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Debe completar los parámetros requeridos..
         /// </summary>
         internal static string TodosParametrosRequerido {

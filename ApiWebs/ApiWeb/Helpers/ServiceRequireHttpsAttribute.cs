@@ -18,8 +18,8 @@ namespace ApiWeb.Helpers
             {
                 var error = new
                 {
-                    error = KeysConfiguration.ErrorServiceSecureHttps,
-                    error_description = AppResources.ErrorServiceSecureHttps
+                    type = KeysConfiguration.ErrorServiceSecureHttps,
+                    message = AppResources.ErrorServiceSecureHttps
                 };
                 actionContext.Response = new HttpResponseMessage(HttpStatusCode.Forbidden)
                 {
