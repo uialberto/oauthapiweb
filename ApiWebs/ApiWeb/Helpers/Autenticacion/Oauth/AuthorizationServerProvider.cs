@@ -6,6 +6,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
+using ApiWeb.AppServices.Modulos.Seguridad;
 
 namespace ApiWeb.Helpers.Autenticacion.Oauth
 {

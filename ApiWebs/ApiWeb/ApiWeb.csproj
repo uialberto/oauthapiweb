@@ -233,7 +233,6 @@
     <Compile Include="Helpers\Autenticacion\Basic\ApiKeyBasicUsuarios.cs" />
     <Compile Include="Helpers\Autenticacion\Basic\AuthBasicModule.cs" />
     <Compile Include="Helpers\Autenticacion\Basic\Credentials.cs" />
-    <Compile Include="Helpers\Autenticacion\IServiceSeguridad.cs" />
     <Compile Include="Helpers\Autenticacion\Oauth\AuthorizationServerProvider.cs" />
     <Compile Include="Helpers\Autenticacion\Oauth\ClienteApiDto.cs" />
     <Compile Include="Helpers\Autenticacion\Oauth\RefreshTokenProvider.cs">
