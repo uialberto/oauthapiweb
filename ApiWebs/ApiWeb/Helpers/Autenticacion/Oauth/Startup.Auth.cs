@@ -15,7 +15,7 @@ namespace ApiWeb
 {
     public partial class Startup
     {
-        private void ConfigureOAuth(IAppBuilder app, IServiceSeguridad pSeguridad)
+        private void ConfigureOAuth(IAppBuilder app)
         {
 
             #region UseOAuthBearerAuthentication
@@ -26,7 +26,7 @@ namespace ApiWeb
                 AuthenticationMode = AuthenticationMode.Active
             };
 
-            var ApiOauthOptions = GetOptionsApi(pSeguridad);
+            var ApiOauthOptions = GetOptionsApi();
             //var webOauthOptions = GetOptionsWeb(pSeguridad);
 
             app.UseOAuthAuthorizationServer(ApiOauthOptions);
@@ -38,7 +38,7 @@ namespace ApiWeb
 
         }
 
-        private OAuthAuthorizationServerOptions GetOptionsApi(IServiceSeguridad service)
+        private OAuthAuthorizationServerOptions GetOptionsApi()
         {
             var value = KeysConfiguration.KeyAccessTokenExpireMin;
             var result = new OAuthAuthorizationServerOptions()
@@ -46,7 +46,7 @@ namespace ApiWeb
                 //AllowInsecureHttp = KeysConfiguration.KeyApiUseHttp,
                 TokenEndpointPath = new PathString(KeysConfiguration.KeyTokenUrl),
                 AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(value),
-                Provider = new AuthorizationServerProvider(service),
+                Provider = new AuthorizationServerProvider(),
                 RefreshTokenProvider = new RefreshTokenProvider()
             };
             return result;

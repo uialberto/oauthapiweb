@@ -7,6 +7,8 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using ApiWeb.AppServices.Modulos.Seguridad;
+using ApiWeb.AppServices.Modulos.Seguridad.Impl;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace ApiWeb.Helpers.Autenticacion.Oauth
 {
@@ -17,7 +19,6 @@ namespace ApiWeb.Helpers.Autenticacion.Oauth
     {
         #region Atributos
 
-        private readonly IServiceSeguridad _seguridad;
 
         #endregion
 
@@ -27,10 +28,8 @@ namespace ApiWeb.Helpers.Autenticacion.Oauth
         /// 
         /// </summary>
         /// <param name="pSeguridad"></param>
-        public AuthorizationServerProvider(IServiceSeguridad pSeguridad)
+        public AuthorizationServerProvider()
         {
-
-            _seguridad = pSeguridad ?? throw new ArgumentNullException(nameof(pSeguridad));
         }
 
         #endregion
@@ -52,22 +51,25 @@ namespace ApiWeb.Helpers.Autenticacion.Oauth
                 {
                     if (!string.IsNullOrWhiteSpace(clientId) && !string.IsNullOrWhiteSpace(clientSecret))
                     {
-                        //var res = await _seguridad.LoginApi(clientId, clientSecret);
-                        //if (res.HasErrors)
-                        //{
-                        //    var error = res.Errors.First();
-                        //    context.SetError(error.Code, error.Message);
-                        //    context.Rejected();
-                        //}
-                        //var data = res.Element;
-                        dynamic data = null;
-                        if (data != null)
+                        using (var seguridad = context.OwinContext.Get<ServiceSeguridad>())
                         {
-                            var client = new ClienteApiDto();
-                            client = data;
-                            context.OwinContext.Set("oauth:client", client);
-                            context.Validated(clientId);
-                        }
+                            //var res = await seguridad.LoginApi(clientId, clientSecret);
+                            //if (res.HasErrors)
+                            //{
+                            //    var error = res.Errors.First();
+                            //    context.SetError(error.Code, error.Message);
+                            //    context.Rejected();
+                            //}
+                            //var data = res.Element;
+                            dynamic data = null;
+                            if (data != null)
+                            {
+                                var client = new ClienteApiDto();
+                                client = data;
+                                context.OwinContext.Set("oauth:client", client);
+                                context.Validated(clientId);
+                            }
+                        }                      
                     }
                     else
                     {
@@ -142,39 +144,42 @@ namespace ApiWeb.Helpers.Autenticacion.Oauth
                 {
                     var userName = context.UserName;
                     var passUser = context.Password;
-                    //var resUser = await _seguridad.Login(userName, passUser);
-                    //if (resUser.HasErrors)
-                    //{
-                    //    var error = resUser.Errors.First();
-                    //    context.SetError(error.Code, error.Message);
-                    //    return;
-                    //}
-                    dynamic user = null;
-                    //var user = client.Usuario;
-                    if (user != null)
+                    
+                    using (var seguridad = context.OwinContext.Get<ServiceSeguridad>())
                     {
-                        //var userOwner = resUser.Element;
-                        UsuarioDto userOwner = new UsuarioDto();
-                        if (user.Id == userOwner.Id)
+                        //var resUser = await seguridad.Login(userName, passUser);
+                        //if (resUser.HasErrors)
+                        //{
+                        //    var error = resUser.Errors.First();
+                        //    context.SetError(error.Code, error.Message);
+                        //    return;
+                        //}
+                        dynamic user = null;
+                        //var user = client.Usuario;
+                        if (user != null)
                         {
-                            var identity = new ClaimsIdentity(context.Options.AuthenticationType);
-                            identity.AddClaim(new Claim(ClaimTypes.Name, user.Username));
-                            identity.AddClaim(new Claim(ClaimTypes.Email, user.Email));
-                            identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Username));
-                            identity.AddClaim(new Claim("gID", user.Id.ToString()));
-                            if (user.KeyRoles.Any())
+                            //var userOwner = resUser.Element;
+                            UsuarioDto userOwner = new UsuarioDto();
+                            if (user.Id == userOwner.Id)
                             {
-                                foreach (var role in user.KeyRoles.ToList())
+                                var identity = new ClaimsIdentity(context.Options.AuthenticationType);
+                                identity.AddClaim(new Claim(ClaimTypes.Name, user.Username));
+                                identity.AddClaim(new Claim(ClaimTypes.Email, user.Email));
+                                identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Username));
+                                identity.AddClaim(new Claim("gID", user.Id.ToString()));
+                                if (user.KeyRoles.Any())
                                 {
-                                    identity.AddClaim(new Claim(ClaimTypes.Role, role));
+                                    foreach (var role in user.KeyRoles.ToList())
+                                    {
+                                        identity.AddClaim(new Claim(ClaimTypes.Role, role));
+                                    }
                                 }
+                                var props = CreateProperties(user.Id.ToString());
+                                var ticket = new AuthenticationTicket(identity, props);
+                                context.Validated(ticket);
                             }
-                            var props = CreateProperties(user.Id.ToString());
-                            var ticket = new AuthenticationTicket(identity, props);
-                            context.Validated(ticket);
                         }
-                    }
-
+                    }                   
                 }
             }
             catch (Exception ex)

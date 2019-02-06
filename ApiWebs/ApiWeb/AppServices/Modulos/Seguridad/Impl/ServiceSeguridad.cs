@@ -7,11 +7,16 @@ using Uibasoft.Community.Comunes.Result;
 
 namespace ApiWeb.AppServices.Modulos.Seguridad.Impl
 {
-    public class ServiceSeguridad : IServiceSeguridad
+    public class ServiceSeguridad : IServiceSeguridad, IDisposable
     {
         public ServiceSeguridad()
         {
 
+        }
+
+        public void Dispose()
+        {
+            //ToDo
         }
 
         public ResultOperation Login(string username, string password)
